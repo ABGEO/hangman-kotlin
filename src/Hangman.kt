@@ -2,12 +2,15 @@ data class Parameters(var player: String, var word: CharArray, var lives: Int) {
     var mask = BooleanArray(word.size)
 }
 
-class Hangman() {
+class Hangman {
 
     private lateinit var parameters: Parameters
     private var usedChard: MutableList<Char> = ArrayList()
     private var results: MutableMap<String, Int> = LinkedHashMap()
 
+    /**
+     * Start game lifecycle.
+     */
     fun start() {
         usedChard = ArrayList()
         parameters = askParameters()
@@ -15,6 +18,9 @@ class Hangman() {
         process()
     }
 
+    /**
+     * Process game events.
+     */
     private fun process() {
         loop@ while (true) {
             while (parameters.lives > 0) {
@@ -36,6 +42,9 @@ class Hangman() {
         }
     }
 
+    /**
+     * Ask user to input character and decide if it is correct.
+     */
     private fun checkInput() {
         var char: String
         while (true) {
@@ -87,6 +96,11 @@ class Hangman() {
         }
     }
 
+    /**
+     * Ask game parameters suc as player name, secret word and remained lives.
+     *
+     * @return New object of Parameters class.
+     */
     private fun askParameters(): Parameters {
         var player = ""
         var word = ""
@@ -131,6 +145,11 @@ class Hangman() {
         return Parameters(player, word.toCharArray(), lives)
     }
 
+    /**
+     * Print Lives remaining and Current Word.
+     *
+     * @param printLives If true print Lives remaining too, else only Current Word.
+     */
     private fun printCurrentStatus(printLives: Boolean = true) {
         if (printLives) {
             println("Lives remaining: ${parameters.lives}")
@@ -148,6 +167,9 @@ class Hangman() {
         println()
     }
 
+    /**
+     * Print top five players result.
+     */
     private fun printResults() {
         println("Results")
         results.toList()
